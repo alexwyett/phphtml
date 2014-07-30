@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Paragraph element
+ * Validation rules for form form fields
  *
  * PHP Version 5.4
  *
@@ -13,10 +13,10 @@
  * @link      http://www.github.com/alexwyett
  */
 
-namespace aw\html;
+namespace aw\html\validation;
 
 /**
- * Paragraph element
+ * Validation object
  *
  * PHP Version 5.4
  *
@@ -27,7 +27,20 @@ namespace aw\html;
  * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link      http://www.github.com/alexwyett
  */
-class P extends \aw\html\base\TextElement
-{
-    
+class ValidEmail extends ValidString
+{   
+    /**
+     * Email Validation function
+     * 
+     * @return boolean
+     */
+    public function validateEmail()
+    {
+        if (!filter_var($this->getValue(), FILTER_VALIDATE_EMAIL)) {
+            throw new ValidationException(
+                'Invalid email address',
+                1002
+            );
+        }
+    }
 }

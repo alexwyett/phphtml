@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Table row element
+ * Paragraph element
  *
  * PHP Version 5.4
  *
@@ -13,10 +13,10 @@
  * @link      http://www.github.com/alexwyett
  */
 
-namespace aw\html\table;
+namespace aw\html\element;
 
 /**
- * Table row element
+ * Paragraph element
  *
  * PHP Version 5.4
  *
@@ -27,7 +27,7 @@ namespace aw\html\table;
  * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link      http://www.github.com/alexwyett
  */
-class Tr extends \aw\html\base\HtmlElement
+class P extends \aw\html\base\TextElement
 {
     
 }

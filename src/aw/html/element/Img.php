@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Base element which allows child elements
+ * Image element
  *
  * PHP Version 5.4
  *
@@ -13,10 +13,10 @@
  * @link      http://www.github.com/alexwyett
  */
 
-namespace aw\html\base;
+namespace aw\html\element;
 
 /**
- * Base element which allows child elements
+ * Image element
  *
  * PHP Version 5.4
  *
@@ -27,22 +27,20 @@ namespace aw\html\base;
  * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link      http://www.github.com/alexwyett
  */
-abstract class HtmlElement extends \aw\html\base\ChildElement
+class Img extends \aw\html\base\Element
 {
-    // ------------------------- Public Methods ---------------------------- //
-        
     /**
      * Constructor
      * 
-     * @param array $attributes Element attributes
+     * @param string $src        Image src
+     * @param array  $attributes Element attributes
      * 
-     * @return \aw\html\base\TextElement
+     * @return \aw\html\base\Element
      */
-    public function __construct($attributes = array())
+    public function __construct($src, $attributes = array())
     {
-        parent::__construct($attributes);
-        $this->setTemplate(
-            '<{getType}{implodeAttributes}>{renderChildren}</{getType}>'
-        );
+        parent::__construct($src, $attributes);
+		$this->setAttribute('src', $src);
+		$this->setTemplate('<{getType}{implodeAttributes} />');
     }
 }

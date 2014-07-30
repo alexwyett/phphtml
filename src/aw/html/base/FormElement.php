@@ -27,7 +27,7 @@ namespace aw\html\base;
  * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link      http://www.github.com/alexwyett
  */
-abstract class FormElement extends Element
+abstract class FormElement extends ChildElement
 {
     /**
      * Validation rule applied
@@ -42,6 +42,16 @@ abstract class FormElement extends Element
     
     // ------------------------- Accessor Methods -------------------------- //
     
+	/**
+	 * Return the rule
+	 *
+	 * @return \aw\html\validation\Valid
+	 */
+	public function getRule()
+	{
+		return $this->rule;
+	}
+	
     /**
      * Set validity status
      *
@@ -64,6 +74,28 @@ abstract class FormElement extends Element
         // Set the required status of the rule
         $this->rule->setRequired($required);
         
+        return $this;
+    }
+    
+    /**
+     * Set the Value
+     * 
+     * @param string $value Element Value
+     * 
+     * @return \aw\html\core\FormElement
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        // Set attribute value
+        $this->attributes['value'] = $this->getValue();
+
+        // Set value to validation rule if present
+        if ($this->getRule()) {
+            $this->getRule()->setValue($this->getValue());
+        }
+
         return $this;
     }
     

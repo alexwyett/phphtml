@@ -13,7 +13,7 @@
  * @link      http://www.github.com/alexwyett
  */
 
-namespace aw\html\table;
+namespace aw\html\element;
 
 /**
  * Table element
@@ -29,9 +29,19 @@ namespace aw\html\table;
  */
 class Table extends \aw\html\base\HtmlElement
 {
-    public static function factory($data = array(), $headers = array())
+	/**
+	 * Static factory method for creating a html table
+	 *
+	 * @param array $data       Data for the tbody section
+	 * @param array $headers    Table columns
+	 * @param array $attributes Table attributes
+	 *
+	 * @return \aw\html\element\Table
+	 */
+    public static function factory($data = array(), $headers = array(), $attributes = array())
     {
-        $table = new Table();
+		// Create new table element
+        $table = new Table($attributes);
         
         // Construct header
         $thead = $table->addChild(new Thead());

@@ -13,7 +13,7 @@
  * @link      http://www.github.com/alexwyett
  */
 
-namespace aw\html;
+namespace aw\html\element;
 
 /**
  * Div element

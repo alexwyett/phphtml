@@ -65,6 +65,13 @@ abstract class Element
     protected $template = '{getType}';
     
     /**
+     * Type of element
+     * 
+     * @var string
+     */
+    protected $type = '';
+    
+    /**
      * Parent object
      * 
      * @var object reference
@@ -93,6 +100,9 @@ abstract class Element
         foreach ($attributes as $key => $value) {
             $this->setAttribute($key, $value);
         }
+		
+		// Set the element type
+		$this->setType($this->getElementType());
     }
 
     /**
@@ -347,11 +357,24 @@ abstract class Element
      * 
      * @param string $template Element template
      * 
-     * @return void
+     * @return \aw\html\base\Element
      */
     public function setTemplate($template)
     {
         $this->template = $template;
+        return $this;
+    }
+    
+    /**
+     * Set the type
+     * 
+     * @param string $type Element type
+     * 
+     * @return \aw\html\base\Element
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
         return $this;
     }
     
@@ -479,11 +502,21 @@ abstract class Element
     }
     
     /**
-     * Get the field type
+     * Return the element type
      * 
      * @return string
      */
     public function getType()
+    {
+        return $this->type;
+    }
+    
+    /**
+     * Get the field type
+     * 
+     * @return string
+     */
+    public function getElementType()
     {
         $type = explode('\\', strtolower(get_called_class()));
         
@@ -508,32 +541,6 @@ abstract class Element
         }
 
         throw new \RuntimeException('Method ' . $method . ' not found');
-    }
-    
-    // ------------------------ Validation functions ------------------------ //
-
-    /**
-     * Return true if validation can applied to this element
-     * 
-     * @return boolean
-     */
-    public function isTestable()
-    {
-        return is_object($this->getRule());
-    }
-    
-    /**
-     * Test required status
-     *
-     * @return boolean
-     */
-    public function isRequired()
-    {
-        if ($this->isTestable()) {
-            return $this->getRule()->isRequired();
-        } else {
-            return false;
-        }
     }
     
     // -------------------------- Private Methods -------------------------- //

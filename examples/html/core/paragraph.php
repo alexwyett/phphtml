@@ -16,8 +16,8 @@
 // Include autoloader
 require_once '../../../autoload.php';
 
-$p = new aw\html\P('Hello World! ');
-$p->addChild(new aw\html\A('Click Me', 'http://google.com'));
+$p = new aw\html\element\P('Hello World! ');
+$p->addChild(new aw\html\element\A('Click Me', 'http://google.com'));
 
 $div = new aw\html\bootstrap\Div('Hi');
 
@@ -28,7 +28,7 @@ $data = array(
     array("3", "Ian", "Stamp"),
 );
 
-$table = aw\html\table\Table::factory($data, $headers);
+$table = \aw\html\element\Table::factory($data, $headers);
 
 $div->addChild($p);
 
