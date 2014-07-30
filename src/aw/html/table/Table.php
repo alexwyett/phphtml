@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Table head element
+ * Table element
  *
  * PHP Version 5.4
  *
@@ -16,7 +16,7 @@
 namespace aw\html\table;
 
 /**
- * Table head element
+ * Table element
  *
  * PHP Version 5.4
  *
@@ -29,15 +29,25 @@ namespace aw\html\table;
  */
 class Table extends \aw\html\base\HtmlElement
 {
-    /**
-     * 
-     * @param type $data
-     * @param type $headers
-     * @return \aw\html\table\Table
-     */
     public static function factory($data = array(), $headers = array())
     {
         $table = new Table();
+        
+        // Construct header
+        $thead = $table->addChild(new Thead());
+        $tr = $thead->addChild(new Tr());
+        foreach ($headers as $header) {
+            $tr->addChild(new Th($header));
+        }
+        
+        // Construct body
+        $tbody = $table->addChild(new Tbody());
+        foreach ($data as $tableTr) {
+            $tr = $tbody->addChild(new Tr());
+            foreach ($tableTr as $tableTd) {
+                $tr->addChild(new Td($tableTd));
+            }
+        }
         
         return $table;
     }

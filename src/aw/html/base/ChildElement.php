@@ -45,11 +45,11 @@ abstract class ChildElement extends \aw\html\base\Element
      * 
      * @return \aw\html\base\ChildElement
      */
-    public function addChild($child)
+    public function addChild(&$child)
     {
         $child->setParent($this);
         $this->children[] = $child;
-        return $this;
+        return $child;
     }
 
     /**
@@ -59,7 +59,7 @@ abstract class ChildElement extends \aw\html\base\Element
      * 
      * @return \aw\html\base\ChildElement
      */
-    public function addChildren($children)
+    public function addChildren(&$children)
     {
         foreach ($children as $child) {
             $this->addChild($child);

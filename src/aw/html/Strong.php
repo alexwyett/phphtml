@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Div element
+ * Strong element
  *
  * PHP Version 5.4
  *
@@ -16,7 +16,7 @@
 namespace aw\html;
 
 /**
- * Div element
+ * Strong element
  *
  * PHP Version 5.4
  *
@@ -27,7 +27,7 @@ namespace aw\html;
  * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link      http://www.github.com/alexwyett
  */
-class Div extends \aw\html\base\TextElement
+class Strong extends \aw\html\base\TextElement
 {
     
 }
