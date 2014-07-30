@@ -19,4 +19,6 @@ require_once '../../../autoload.php';
 $p = new \aw\html\P('Hello World! ');
 $p->addChild(new aw\html\A('Click Me', 'http://google.com'));
 
-echo $p;
+$div = new aw\html\bootstrap\Div('Hi');
+$div->addChild($p);
+echo $div;
