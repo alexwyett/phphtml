@@ -16,7 +16,7 @@
 // Include autoloader
 require_once '../../../autoload.php';
 
-$p = new aw\html\element\P('Hello World! ');
+$p = new \aw\html\element\P('Hello World! ');
 $p->addChild(new aw\html\element\A('Click Me', 'http://google.com'));
 
 $div = new aw\html\bootstrap\Div('Hi');

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Textfield object
+ * Hidden input object
  *
  * PHP Version 5.4
  *
@@ -16,7 +16,7 @@
 namespace aw\html\element;
 
 /**
- * Textfield object
+ * Hidden input object
  *
  * PHP Version 5.4
  *
@@ -27,31 +27,19 @@ namespace aw\html\element;
  * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link      http://www.github.com/alexwyett
  */
-class Input extends \aw\html\base\FormElement
+class Hidden extends Input
 {
     /**
      * Constructor
      * 
      * @param string $name       Field name
      * @param array  $attributes Field attributes
-     * @param string $type       Field type (defaulted to text)
      * 
      * @return void
      */
-    public function __construct($name, $attributes = array(), $type = 'text')
+    public function __construct($name, $attributes = array())
     {
         // Add attributes
-        parent::__construct($attributes);
-
-        // Set element name
-        $this->setName($name);
-		
-        // Set element type
-        $this->setType($type);
-        
-        // Set the template
-        $this->setTemplate(
-            '<input type="{getType}"{implodeAttributes}>'
-        );
+        parent::__construct($name, $attributes, 'hidden');
     }
 }

@@ -35,22 +35,35 @@ abstract class FormElement extends ChildElement
      * @var \aw\html\validation\Valid
      */
     protected $rule = null;
-
-    // ------------------------- Public Methods ----------------------------- //
-
     
+    /**
+     * Value of element
+     * 
+     * @var string
+     */
+    protected $value = null;
     
     // ------------------------- Accessor Methods -------------------------- //
     
-	/**
-	 * Return the rule
-	 *
-	 * @return \aw\html\validation\Valid
-	 */
-	public function getRule()
-	{
-		return $this->rule;
-	}
+    /**
+     * Return the rule
+     *
+     * @return \aw\html\validation\Valid
+     */
+    public function getRule()
+    {
+        return $this->rule;
+    }
+    
+    /**
+     * Return the value
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
 	
     /**
      * Set validity status
@@ -124,8 +137,4 @@ abstract class FormElement extends ChildElement
             return false;
         }
     }
-    
-    // -------------------------- Private Methods -------------------------- //
-    
-    
 }

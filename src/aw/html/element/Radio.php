@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Textfield object
+ * Radio button object
  *
  * PHP Version 5.4
  *
@@ -16,7 +16,7 @@
 namespace aw\html\element;
 
 /**
- * Textfield object
+ * Radio button object
  *
  * PHP Version 5.4
  *
@@ -27,7 +27,7 @@ namespace aw\html\element;
  * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link      http://www.github.com/alexwyett
  */
-class Input extends \aw\html\base\FormElement
+class Radio extends Checkbox
 {
     /**
      * Constructor
@@ -38,20 +38,9 @@ class Input extends \aw\html\base\FormElement
      * 
      * @return void
      */
-    public function __construct($name, $attributes = array(), $type = 'text')
+    public function __construct($name, $attributes = array(), $type = 'radio')
     {
         // Add attributes
-        parent::__construct($attributes);
-
-        // Set element name
-        $this->setName($name);
-		
-        // Set element type
-        $this->setType($type);
-        
-        // Set the template
-        $this->setTemplate(
-            '<input type="{getType}"{implodeAttributes}>'
-        );
+        parent::__construct($name, $attributes, $type);
     }
 }

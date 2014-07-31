@@ -77,13 +77,6 @@ abstract class Element
      * @var object reference
      */
     protected $parent = null;
-    
-    /**
-     * Value of element
-     * 
-     * @var string
-     */
-    protected $value = null;
 
     // ------------------------- Public Methods ---------------------------- //
         
@@ -101,8 +94,8 @@ abstract class Element
             $this->setAttribute($key, $value);
         }
 		
-		// Set the element type
-		$this->setType($this->getElementType());
+        // Set the element type
+        $this->setType($this->getElementType());
     }
 
     /**
@@ -216,7 +209,7 @@ abstract class Element
             $parent->removeChild($this->getIndex());
             $this->_removeParent();
         }
-        return $this;
+        return $parent;
     }
    
     /**
@@ -379,23 +372,6 @@ abstract class Element
     }
     
     /**
-     * Set the Value
-     * 
-     * @param string $value Element Value
-     * 
-     * @return aw\forms\fields\ValueElement
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
-
-        // Set attribute value
-        $this->attributes['value'] = $this->getValue();
-
-        return $this;
-    }
-    
-    /**
      * Retrieve a single attribute
      *
      * @param string $attributeName Attribute name you wish to search for
@@ -410,7 +386,12 @@ abstract class Element
             return $this->attributes[$attributeName];
         }
 
-        throw new \RuntimeException('Attribute does not exist');
+        throw new \RuntimeException(
+            sprintf(
+                'Attribute \'%s\' does not exist',
+                $attributeName
+            )
+        );
     }
     
     /**
@@ -479,16 +460,6 @@ abstract class Element
     public function getParent()
     {
         return $this->parent;
-    }
-    
-    /**
-     * Get the element value
-     * 
-     * @return string
-     */
-    public function getValue()
-    {
-        return $this->value;
     }
     
     /**

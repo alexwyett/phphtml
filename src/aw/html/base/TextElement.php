@@ -27,7 +27,7 @@ namespace aw\html\base;
  * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link      http://www.github.com/alexwyett
  */
-abstract class TextElement extends \aw\html\base\ChildElement
+abstract class TextElement extends ChildElement
 {
     /**
      * Text
