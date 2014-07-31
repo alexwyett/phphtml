@@ -27,7 +27,7 @@ namespace aw\html\element;
  * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link      http://www.github.com/alexwyett
  */
-class H5 extends \aw\html\base\TextElement
+class H5 extends H4
 {
     
 }

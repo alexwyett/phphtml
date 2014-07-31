@@ -25,7 +25,6 @@ echo $tf;
 // Instantiate a new text field with attributes
 $tf2 = new \aw\html\element\Input(
     'test2',
-    'text',
     array(
         'class' => 'testClass',
         'value' => 'Test2'
