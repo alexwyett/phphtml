@@ -13,7 +13,7 @@
  * @link      http://www.github.com/alexwyett
  */
 
-namespace aw\formfields\validation;
+namespace aw\html\validation;
 
 /**
  * Slug Validation object

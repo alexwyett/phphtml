@@ -27,20 +27,7 @@ namespace aw\html\element;
  * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link      http://www.github.com/alexwyett
  */
-class Abbr extends \aw\html\base\Element
+class Abbr extends \aw\html\base\TextElement
 {
-    /**
-     * Constructor
-     * 
-     * @param string $title      Abbreviation
-     * @param array  $attributes Element attributes
-     * 
-     * @return \aw\html\base\Element
-     */
-    public function __construct($title, $attributes = array())
-    {
-        parent::__construct($title, $attributes);
-		$this->setAttribute('title', $title);
-		$this->setTemplate('<{getType}{implodeAttributes} />');
-    }
+    
 }

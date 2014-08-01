@@ -53,6 +53,11 @@ class Option extends \aw\html\base\TextElement
             '<{getType}{implodeAttributes}>{getText}</{getType}>');
     }
     
+    /**
+     * Get the value of the option
+     * 
+     * @return string
+     */
     public function getValue()
     {
         if (array_key_exists('value', $this->attributes)) {

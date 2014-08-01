@@ -266,7 +266,7 @@ abstract class Element
      * @param array $key   Attribute name
      * @param array $value and value
      * 
-     * @return void
+     * @return \aw\html\base\Element
      */
     public function setAttribute($key, $value)
     {
@@ -278,6 +278,23 @@ abstract class Element
 
         // Set attribute value
         $this->attributes[$key] = $value;
+        
+        return $this;
+    }
+    
+    /**
+     * Set the attributes from an array
+     * 
+     * @param array $attributes Attributes
+     * 
+     * @return \aw\html\base\Element
+     */
+    public function setAttributes($attributes)
+    {
+        foreach ($attributes as $key => $value) {
+            $this->setAttribute($key, $value);
+        }
+        
         return $this;
     }
     

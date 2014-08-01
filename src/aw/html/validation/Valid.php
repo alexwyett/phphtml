@@ -147,7 +147,7 @@ class Valid
             $this->$method();
         }
 		
-		return true;
+        return true;
     }
     
     /**
