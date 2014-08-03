@@ -16,25 +16,26 @@
 // Include autoloader
 require_once '../../../autoload.php';
 
-$list = \aw\html\element\NestedList::factory(array(1, 2, 3));
+$list = \aw\html\element\Ol::factory(range(1, 20));
 echo $list;
 
-$list2 = \aw\html\element\NestedList::factory(
+$list2 = \aw\html\element\Ul::factory(
     array(
         1,
         2 => array(
             'attributes' => array(
-                'style' => 'font-weight: bold;'
+                'style' => 'font-weight: bold; font-style: italic;'
             )
         ),
         3,
         "test" => array(
-            'attributes' => array(),
             'children' => array(
                 4,
                 5,
                 "testing" => array(
-                    'attributes' => array(),
+                    'attributes' => array(
+                        'style' => 'font-style: italic;'
+                    ),
                     'children' => array(
                         6,
                         7,

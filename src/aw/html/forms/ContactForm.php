@@ -56,9 +56,8 @@ class ContactForm extends StaticForm
         // Add fieldset to form
         $form->addChild($fs);
         
-        // Start creating/adding fields and adding them to the fieldset
-        $fs->addChild(
-            self::getNewLabelAndSelect(
+        $children = array(
+            'title' => self::getNewLabelAndSelect(
                 'Title', 
                 array(
                     'Mr' => 'Mr',
@@ -71,23 +70,23 @@ class ContactForm extends StaticForm
                 ),
                 'ValidString',
                 true
-            )
+            ),
+            'initial' => self::getNewLabelAndTextField('Initial'),
+            'surname' => self::getNewLabelAndTextField(
+                'Surname',
+                'ValidString',
+                true
+            ),
+            'email' => self::getNewLabelAndTextField('Email', 'ValidEmail'),
+            'telephone' => self::getNewLabelAndTextField(
+                'Telephone',
+                'ValidString',
+                true
+            ),
+            'mobile' => self::getNewLabelAndTextField('Mobile')
         );
         
-        // Add initials
-        $fs->addChild(self::getNewLabelAndTextField('Initial'));
-        
-        // Add surname
-        $fs->addChild(self::getNewLabelAndTextField('Surname', 'ValidString', true));
-        
-        // Add email
-        $fs->addChild(self::getNewLabelAndTextField('Email', 'ValidEmail'));
-        
-        // Add telephone
-        $fs->addChild(self::getNewLabelAndTextField('Telephone', 'ValidString', true));
-        
-        // Add mobile telephone
-        $fs->addChild(self::getNewLabelAndTextField('Mobile'));
+        $fs->addChildren($children);
         
         // Add submit button
         $form->addChild(

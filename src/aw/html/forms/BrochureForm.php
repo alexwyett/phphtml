@@ -50,10 +50,12 @@ class BrochureForm extends StaticForm
         $form = new \aw\html\element\Form($attributes, $formValues);
         
         $contactform = ContactForm::factory();
-        $form->addChild($contactform->getElementBy('getType', 'fieldset'));
+        $contactFs = $contactform->getElementBy('getType', 'fieldset');
+        $form->addChild($contactFs);
         
         $addressform = AddressForm::factory(array(), array(), $countries);
-        $form->addChild($addressform->getElementBy('getType', 'fieldset'));
+        $addressformFs = $addressform->getElementBy('getType', 'fieldset');
+        $form->addChild($addressformFs);
 
         // Set the value of the country field to default to UK
         if (count($countries) > 0) {
@@ -68,46 +70,42 @@ class BrochureForm extends StaticForm
             )
         );
         
-        $fs->addChild(
-            self::getNewLabelAndCheckboxField(
-                'Please tick here if you would like to here about our special offers'
-            )->setAttribute('for', 'emailOptIn')
-                ->getElementBy('getType', 'checkbox')
-                ->setName('emailOptIn')
-                ->setid('emailOptIn')
-                ->getParent()
-        );
+        $emailOptIn = self::getNewLabelAndCheckboxField(
+            'Please tick here if you would like to here about our special offers'
+        )->setAttribute('for', 'emailOptIn')
+            ->getElementBy('getType', 'checkbox')
+            ->setName('emailOptIn')
+            ->setid('emailOptIn')
+            ->getParent();
+        $fs->addChild($emailOptIn);
         
         if (count($sources) > 0) {
-            $fs->addChild(
-                self::getNewLabelAndSelect(
-                    'Where did you here about us?', 
-                    $sources,
-                    'ValidString',
-                    true
-                )->getElementBy('getType', 'select')
-                    ->setName('source')
-                    ->getParent()
-            );
+            $sourceInput = self::getNewLabelAndSelect(
+                'Where did you here about us?', 
+                $sources,
+                'ValidString',
+                true
+            )->getElementBy('getType', 'select')
+                ->setName('source')
+                ->getParent();
+            $fs->addChild($sourceInput);
         } else {
-            $fs->addChild(
-                new \aw\html\element\HiddenInput(
-                    'source',
-                    array(
-                        'value' => 'OTH'
-                    )
+            $sourceInput = new \aw\html\element\HiddenInput(
+                'source',
+                array(
+                    'value' => 'OTH'
                 )
             );
-            $fs->addChild(
-                self::getNewLabelAndTextField(
-                    'Where did you here about us?',
-                    'ValidString',
-                    true
-                )->getElementBy('getType', 'text')
-                    ->setName('other')
-                    ->getParent() // Need to return the parent as the getElementBy
-                                  // accessor returns the text field not the label
-            );
+            $fs->addChild($sourceInput);
+            $where = self::getNewLabelAndTextField(
+                'Where did you here about us?',
+                'ValidString',
+                true
+            )->getElementBy('getType', 'text')
+                ->setName('other')
+                ->getParent(); // Need to return the parent as the getElementBy
+                               // accessor returns the text field not the label
+            $fs->addChild($where);
         }
         
         // Add optional details form
