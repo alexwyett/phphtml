@@ -32,6 +32,34 @@ namespace aw\html\element;
 class Form extends \aw\html\base\HtmlElement
 {
     /**
+     * Nonce salt
+     * 
+     * @var string 
+     */
+    const PHPHTML_NONCE_SALT = 'phphtml_nonce';
+    
+    /**
+     * Nonce expiration timestamp
+     * 
+     * @var timestamp
+     */
+    const PHPHTML_NONCE_EXPIRATION = 300;
+    
+    /**
+     * Nonce string length
+     * 
+     * @var timestamp
+     */
+    const PHPHTML_NONCE_LENGTH = 10;
+    
+    /**
+     * Session array index
+     * 
+     * @var timestamp
+     */
+    const PHPHTML_NONCE_SESSION_INDEX = 'phphtml_nonce';
+    
+    /**
      * Key/value pair array of form values (for persistence)
      * 
      * @var array
@@ -51,6 +79,13 @@ class Form extends \aw\html\base\HtmlElement
      * @var function
      */
     protected $callback = null;
+    
+    /**
+     * Nonce name
+     * 
+     * @var string
+     */
+    protected $nonceName = '';
 
     /**
      * Constructor
@@ -174,6 +209,16 @@ class Form extends \aw\html\base\HtmlElement
     }
     
     /**
+     * Return the nonce name
+     * 
+     * @return string
+     */
+    public function getNonceName()
+    {
+        return $this->nonceName;
+    }
+    
+    /**
      * Return a specific form value or false
      * 
      * @param string $key Array key
@@ -232,6 +277,20 @@ class Form extends \aw\html\base\HtmlElement
         return $this;
     }
     
+    /**
+     * Set the nonce name
+     * 
+     * @param string $name Nonce name
+     * 
+     * @return \aw\html\element\Form
+     */
+    public function setNonceName($name)
+    {
+        $this->nonceName = $name;
+        
+        return $this;
+    }
+    
     // -------------------------- Helper Methods -------------------------- //
     
     /**
@@ -286,5 +345,122 @@ class Form extends \aw\html\base\HtmlElement
                 return;
             }
         );
+    }
+    
+    // ---------------------------- Nonce Methods --------------------------- //
+
+    /**
+     * Add a nonce hidden field to the form
+     * 
+     * @param string $nonceName Name of the nonce to be stored
+     * 
+     * @return \aw\html\element\Form
+     */
+    public function addNonce($nonceName)
+    {
+        $nonce = new Nonce(self::PHPHTML_NONCE_SESSION_INDEX);
+        $this->setNonceName($nonceName);
+        $nonce->setNonce($this->createNonce());
+        
+        return $this->addChild($nonce);
+    }
+    
+    /**
+     *	Creates a nonce (number used once)
+     *
+     *	Runs a hash algorithm on a name, session data and timestamp to generate
+     *	a one-time-numer. Saved as a session value
+     *	
+     *	@param string $name the nonce name
+     * 
+     *	@returns string
+     */
+    public function createNonce()
+    {
+        if (!$this->_checkNonce()) {
+            $timestamp = time();
+
+            $_SESSION[self::PHPHTML_NONCE_SESSION_INDEX][$this->getNonceName()] = array( 
+                'token' => $this->_createNonce($timestamp),
+                'timestamp' => $timestamp
+            );
+        }
+        
+        return $_SESSION[self::PHPHTML_NONCE_SESSION_INDEX][$this->getNonceName()]['token'];
+    }
+
+    /**
+     *	Actually creates the nonce
+     *
+     * 	@params integer $timestamp the current UNIX timestamp
+     * 
+     *	@returns string
+     */
+    private function _createNonce($timestamp)
+    {
+        return substr(
+            md5($this->getNonceName() . self::PHPHTML_NONCE_SALT . session_id() . $timestamp),
+            0,
+            self::PHPHTML_NONCE_LENGTH
+        );
+    }
+
+    /**
+     *	Verifies a nonce (number used once)
+     *
+     *	Simply reruns the algorithm to create the nonce and tries to match
+     *	it with the stored value. If it doesn't exist or doesn't match, returns
+     *	false. If it is expired, returns false. If it is valid, returns true;
+     * 
+     *	@returns boolean
+     */
+    public function verifyNonce()
+    {
+        $nonceEle = $this->getElementBy('getName', self::PHPHTML_NONCE_SESSION_INDEX);
+        
+        if ($this->_checkNonce() && $nonceEle) {
+            $timestamp = $_SESSION[self::PHPHTML_NONCE_SESSION_INDEX][$this->getNonceName()]['timestamp'];
+
+            if ($timestamp + self::PHPHTML_NONCE_EXPIRATION < time()) {
+                $this->removeNonce();
+                
+                return false;
+            }
+
+            return $this->getFormValue(self::PHPHTML_NONCE_SESSION_INDEX) == $this->_createNonce($timestamp);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Removes the nonce
+     * 
+     * @returns boolean
+     */
+    public function removeNonce()
+    {
+        if ($this->_checkNonce()) {
+            unset($_SESSION[self::PHPHTML_NONCE_SESSION_INDEX][$this->getNonceName()]);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    /**
+     * Check for a nonce within the session
+     * 
+     * @return boolean
+     */
+    private function _checkNonce()
+    {
+        if (empty($_SESSION[self::PHPHTML_NONCE_SESSION_INDEX]) 
+            || empty($_SESSION[self::PHPHTML_NONCE_SESSION_INDEX][$this->getNonceName()])
+        ) {
+            return false;
+        }
+        
+        return true;
     }
 }
