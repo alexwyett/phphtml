@@ -3,15 +3,14 @@
     "type": "library",
     "description": "HTML creation for PHP 5.4",
     "keywords": ["forms", "html"],
-    "homepage": "http://github.com/alexwyett/aw-phphtml",
+    "homepage": "http://github.com/alexwyett/phphtml",
     "require": {
         "php": ">=5.4.0"
     },
     "license": "proprietary",
     "autoload": {
         "psr-0": {
-            "aw\\phphtml\\": "src/"
+            "aw\\html\\": "src/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
