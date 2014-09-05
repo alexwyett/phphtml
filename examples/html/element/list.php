@@ -14,7 +14,7 @@
  */
 
 // Include autoloader
-require_once '../../../autoload.php';
+require_once dirname(__FILE__) . '/../../../autoload.php';
 
 $list = \aw\html\element\Ol::factory(range(1, 20));
 echo $list;
