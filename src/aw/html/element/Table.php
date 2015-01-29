@@ -29,25 +29,34 @@ namespace aw\html\element;
  */
 class Table extends \aw\html\base\HtmlElement
 {
-	/**
-	 * Static factory method for creating a html table
-	 *
-	 * @param array $data       Data for the tbody section
-	 * @param array $headers    Table columns
-	 * @param array $attributes Table attributes
-	 *
-	 * @return \aw\html\element\Table
-	 */
+    /**
+     * Static factory method for creating a html table
+     *
+     * @param array $data       Data for the tbody section
+     * @param array $headers    Table columns
+     * @param array $attributes Table attributes
+     *
+     * @return \aw\html\element\Table
+     */
     public static function factory($data = array(), $headers = array(), $attributes = array())
     {
-		// Create new table element
+        // Create new table element
         $table = new Table($attributes);
         
         // Construct header
         $thead = $table->addChild(new Thead());
         $tr = $thead->addChild(new Tr());
         foreach ($headers as $header) {
-            $tr->addChild(new Th($header));
+            $th = new Th('');
+            if (is_string($header)) {
+                $th->setText($header);
+            } else {
+                foreach ($header as $key => $val) {
+                    $method = 'set' . ucfirst($key);
+                    $th->$method($val);
+                }
+            }
+            $tr->addChild($th);
         }
         
         // Construct body
